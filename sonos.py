@@ -154,22 +154,26 @@ def handle_event(dev):
   y=int(480-(x1/800)*480)
   scr.screenon()
 
-  if x >= 430 and y >= 400:
-    if x>= 740:
-      v = min(zone.volume,96)
-      zone.volume = v + 4
-    elif x>= 670:
-      v = max(zone.volume,4)
-      zone.volume = v - 4
-    elif x>= 600:
-      zone.next()
-    elif x>= 520:
-      if playerstatus == 'PLAYING':
-        zone.pause()
+  try:
+    if x >= 430 and y >= 400:
+      if x>= 740:
+        v = min(zone.volume,96)
+        zone.volume = v + 4
+      elif x>= 670:
+        v = max(zone.volume,4)
+        zone.volume = v - 4
+      elif x>= 600:
+        zone.next()
+      elif x>= 520:
+        if playerstatus == 'PLAYING':
+          zone.pause()
+        else:
+          zone.play()
       else:
-        zone.play()
-    else:
-      zone.previous()      
+        zone.previous()      
+  except Exception as e:
+    print(e)
+    pass
 
 ## Get seconds from time
 def get_sec(time_str):
